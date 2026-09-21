@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Sistema frontend para la gestión y registro de tareas académicas"
+    >
+
+    <title>Sistema de Registro de Tareas</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+</head>
+
+
+<body class="bg-gray-100 min-h-screen">
+
+    <main class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
+
+        <!-- Encabezado principal -->
+
+        <header class="encabezado-principal mb-10">
+
+            <div class="badge-sistema">
+
+                <span class="badge-punto"></span>
+
+                Panel Académico
+
+            </div>
+
+            <h1 class="titulo-principal">
+                Sistema de Registro de Tareas
+            </h1>
+
+            <p class="subtitulo-principal">
+                Plataforma frontend para el registro,
+                administración y seguimiento de tareas académicas.
+            </p>
+
+        </header>
+
+
+        <!-- Resumen del sistema -->
+
+        <section
+            class="
+                grid
+                grid-cols-1
+                md:grid-cols-3
+                gap-4
+                mb-6
+            "
+        >
+
+            <article class="bg-white dashboard-card">
+
+                <div>
+
+                    <p class="dashboard-label">
+                        Total de tareas
+                    </p>
+
+                    <p
+                        id="totalTareas"
+                        class="dashboard-number"
+                    >
+                        0
+                    </p>
+
+                </div>
+
+                <div class="dashboard-icon dashboard-icon-blue">
+                    ✓
+                </div>
+
+            </article>
+
+
+            <article class="bg-white dashboard-card">
+
+                <div>
+
+                    <p class="dashboard-label">
+                        Tecnología
+                    </p>
+
+                    <p class="dashboard-title">
+                        Frontend
+                    </p>
+
+                    <p class="dashboard-description">
+                        HTML · CSS · JavaScript
+                    </p>
+
+                </div>
+
+                <div class="dashboard-icon dashboard-icon-dark">
+                    &lt;/&gt;
+                </div>
+
+            </article>
+
+
+            <article class="bg-white dashboard-card">
+
+                <div>
+
+                    <p class="dashboard-label">
+                        Almacenamiento
+                    </p>
+
+                    <p class="dashboard-title">
+                        LocalStorage
+                    </p>
+
+                    <p class="dashboard-description">
+                        Persistencia local
+                    </p>
+
+                </div>
+
+                <div class="dashboard-icon dashboard-icon-blue">
+                    DB
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- Contenido principal -->
+
+        <section
+            class="
+                grid
+                grid-cols-1
+                lg:grid-cols-[360px_1fr]
+                gap-6
+                items-start
+            "
+        >
+
+
+            <!-- Formulario -->
+
+            <section
+                class="
+                    bg-white
+                    panel-principal
+                    p-6
+                    lg:sticky
+                    lg:top-6
+                "
+            >
+
+                <div class="mb-6">
+
+                    <h2
+                        id="tituloFormulario"
+                        class="titulo-seccion"
+                    >
+                        Registrar tarea
+                    </h2>
+
+                    <p class="descripcion-seccion">
+                        Ingresá la información correspondiente
+                        a la nueva tarea.
+                    </p>
+
+                </div>
+
+
+                <form
+                    id="formTarea"
+                    autocomplete="off"
+                    novalidate
+                >
+
+                    <input
+                        type="hidden"
+                        id="tareaId"
+                    >
+
+
+                    <div class="mb-5">
+
+                        <label
+                            for="nombreTarea"
+                            class="form-label"
+                        >
+                            Nombre de la tarea
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nombreTarea"
+                            maxlength="80"
+                            placeholder="Ej: Trabajo de investigación"
+                            class="form-control"
+                        >
+
+                        <p
+                            id="errorNombre"
+                            class="form-error hidden"
+                        ></p>
+
+                    </div>
+
+
+                    <div class="mb-6">
+
+                        <div class="campo-encabezado">
+
+                            <label
+                                for="descripcionTarea"
+                                class="form-label"
+                            >
+                                Descripción
+                            </label>
+
+                            <span
+                                id="contadorDescripcion"
+                                class="contador-caracteres"
+                            >
+                                0 / 300
+                            </span>
+
+                        </div>
+
+                        <textarea
+                            id="descripcionTarea"
+                            rows="6"
+                            maxlength="300"
+                            placeholder="Descripción de la tarea..."
+                            class="form-control resize-none"
+                        ></textarea>
+
+                        <p
+                            id="errorDescripcion"
+                            class="form-error hidden"
+                        ></p>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            id="btnGuardar"
+                            class="btn-principal"
+                        >
+                            Guardar tarea
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnCancelar"
+                            class="btn-secundario hidden"
+                        >
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Listado de tareas -->
+
+            <section
+                class="
+                    bg-white
+                    panel-principal
+                    p-6
+                    min-h-[430px]
+                "
+            >
+
+                <div class="listado-header">
+
+                    <div>
+
+                        <h2 class="titulo-seccion">
+                            Tareas registradas
+                        </h2>
+
+                        <p class="descripcion-seccion">
+                            Administrá los registros académicos
+                            cargados en el sistema.
+                        </p>
+
+                    </div>
+
+
+                    <div class="buscador-contenedor">
+
+                        <label
+                            for="buscarTarea"
+                            class="sr-only"
+                        >
+                            Buscar tarea
+                        </label>
+
+                        <input
+                            type="search"
+                            id="buscarTarea"
+                            placeholder="Buscar tarea..."
+                            class="form-control buscador"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="tabla-contenedor">
+
+                    <table class="tabla-tareas">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="columna-numero">
+                                    #
+                                </th>
+
+                                <th>
+                                    Nombre
+                                </th>
+
+                                <th>
+                                    Descripción
+                                </th>
+
+                                <th class="columna-acciones">
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="listaTareas"></tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    id="sinTareas"
+                    class="estado-vacio"
+                >
+
+                    <div class="estado-vacio-icono">
+                        ✓
+                    </div>
+
+                    <p
+                        id="tituloSinTareas"
+                        class="estado-vacio-titulo"
+                    >
+                        No existen tareas registradas
+                    </p>
+
+                    <p
+                        id="textoSinTareas"
+                        class="estado-vacio-texto"
+                    >
+                        Agregá tu primera tarea utilizando
+                        el formulario.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- Footer -->
+
+        <footer class="footer-personal">
+
+            <div class="footer-top">
+
+                <div class="footer-brand">
+
+                    <h3>
+                        Sistema de Registro de Tareas
+                    </h3>
+
+                    <p>
+                        Proyecto frontend utilizando HTML, CSS y JavaScript.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-datos">
+
+                    <h4>
+                        Datos del desarrollador
+                    </h4>
+
+                    <ul>
+
+                        <li>
+
+                            <span>
+                                Nombre:
+                            </span>
+
+                            <strong class="footer-valor">
+                                Anibal Silva
+                            </strong>
+
+                        </li>
+
+                        <li>
+
+                            <span>
+                                Instagram:
+                            </span>
+
+                            <a
+                                href="https://www.instagram.com/jesusilv13/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="footer-link"
+                            >
+                                @jesusilv13
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <span>
+                                Contacto:
+                            </span>
+
+                            <a
+                                href="https://wa.me/595991386600"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="footer-link"
+                            >
+                                0991 386600
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <span>
+                                Ubicación:
+                            </span>
+
+                            <strong class="footer-valor">
+                                Carapeguá - Paraguay
+                            </strong>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Anibal Silva · Todos los derechos reservados
+                </p>
+
+                <p>
+                    Frontend Project · HTML · CSS · JavaScript
+                </p>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
