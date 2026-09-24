@@ -1,4 +1,4 @@
-# clase24
+# Registro de Tareas
 Uso de chatgpt para mejora y optimizacion de codigo.
 
 # Sistema de Registro de Tareas
